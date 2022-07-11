@@ -64,17 +64,17 @@ Get instruments list with their details
 {% endswagger-response %}
 {% endswagger %}
 
-| Field             | Type   | Description                                |
-| ----------------- | ------ | ------------------------------------------ |
-| id                | UUID   | Instrument Id                              |
-| symbol            | String | Instrument symbol                          |
-| status            | eNum   | “Active”/ “Disabled”                       |
-| baseAsset         | String | Base asset                                 |
-| quoteAsset        | String | Quote asset                                |
-| orderFlow         | eNum   | Not relevant, ignore                       |
-| tradeFlow         | eNum   | Not relevant, ignore                       |
-| description       | String | Instrument description                     |
-| imageUrls         | \[]Url | List of instrument images urls             |
-| quantityPrecision | Int    | Allowed decimal places for orders quantity |
+| Field                  | Type   | Description                                |
+| ---------------------- | ------ | ------------------------------------------ |
+| id                     | UUID   | Instrument Id                              |
+| symbol                 | String | Instrument symbol                          |
+| status                 | eNum   | “Active”/ “Disabled”                       |
+| baseAsset              | String | Base asset                                 |
+| quoteAsset             | String | Quote asset                                |
+| orderFlow              | eNum   | Not relevant, ignore                       |
+| tradeFlow              | eNum   | Not relevant, ignore                       |
+| description `optional` | String | Instrument description                     |
+| imageUrls `optional`   | \[]Url | List of instrument images urls             |
+| quantityPrecision      | Int    | Allowed decimal places for orders quantity |
 
 &#x20;
