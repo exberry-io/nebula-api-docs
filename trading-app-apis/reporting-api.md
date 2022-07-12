@@ -239,4 +239,144 @@ Any account can use the `orders` API  to retrieve the full list of all its own o
 {% endtab %}
 {% endtabs %}
 
+## Transactions
+
+`transactions` API  allows to retrieve the full list of account transactions.  &#x20;
+
+{% hint style="info" %}
+`endpoint:` v1/broker.wallet/transactions
+{% endhint %}
+
+### Request
+
+| Parameter         | Type       | Description                                                                                                                                                                                                                                                                                                                                          |
+| ----------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| types             | \[]String  | <p>List of transaction Type, empty means all types. For example: [“Deposit”, “Withdrawal”] <br>Available values: <br>● Deposit <br>● Withdrawal <br>● Trade <br>● Fee</p><p><br>Note: You can also use the below but those has not ledger impact but only moving balance from "Free" to "Locked" bucket:<br>● Lock Balance <br>● Release Balance</p> |
+| asset             | String     | <p>Optional<br>​Search for specific asset name</p>                                                                                                                                                                                                                                                                                                   |
+| id                | String     | <p>Optional<br>Search for specific transaction Id</p>                                                                                                                                                                                                                                                                                                |
+| ledgerReference   | String     | <p>Optional<br>Search for specific ledgerReference</p>                                                                                                                                                                                                                                                                                               |
+| internalReference | String     | <p>Optional<br>Search for specific internalReference (search with LIKE behavior)</p>                                                                                                                                                                                                                                                                 |
+| requestId         | String     | <p>Optional<br>Search for specific requestId</p>                                                                                                                                                                                                                                                                                                     |
+| dateFrom          | Unix time  | <p>Optional, In seconds<br>Search for orders where createdAt ≥ dateFrom</p>                                                                                                                                                                                                                                                                          |
+| dateTo            | Unix time  | <p>Optional, In seconds<br>Search for orders where createdAt &#x3C; dateTo</p>                                                                                                                                                                                                                                                                       |
+| orderBy           | Object     | <p>Optional <br>object with 2 parameters: field (String) direction (Asc, Desc) direction</p><p>If nothing or invalid field was sent the default is [timestamp, Desc]</p>                                                                                                                                                                             |
+| limit             | Int        | <p>Optional <br>How many records to include in each page If nothing was sent default is 100 <br>Max value = 100</p>                                                                                                                                                                                                                                  |
+| offset            | Int        | <p>Optional <br>Which record to start send from (if you want page 3 and there are 50 records per page offset should be 150) If nothing was sent default is 0 (=first record)</p>                                                                                                                                                                     |
+
+### **Response**
+
+`transactions` response provides close to real time list of all transactions for the requested period.
+
+| Field             | Description                                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------------------------ |
+| id                | Transaction Id                                                                                         |
+| type              | Transaction type                                                                                       |
+| account           | Account name                                                                                           |
+| asset             | Asset name                                                                                             |
+| amount            | Transaction amount, can be negative                                                                    |
+| internalReference | <p>Deposit/ Withdraw - Empty<br>Trade/ Fee - [symbol]|trade|[matchId] (e.g. USD-BTC|trade|42)</p>      |
+| ledgerReference   | External ledger transaction Id                                                                         |
+| requestId         | Request Id (single value for all Trade & Fee transactions generated from a single trade                |
+| timestamp         | Timestamp of the transaction, Unix time in seconds Note: This is end time of capturing the transaction |
+
+### **Error Codes**
+
+| Code | Message                                    |
+| ---- | ------------------------------------------ |
+| 1    | System is unavailable                      |
+| 100  | Missing or invalid parameter: \[FieldName] |
+| 101  | dateTo must be greater than dateFrom       |
+| 10   | Permission denied                          |
+
+### **Samples**
+
+{% tabs %}
+{% tab title="Request" %}
+```jsonp
+{
+  "q": "v1/broker.wallet/transactions",
+  "sid": 1,
+  "d": {
+    "types":["Deposit", "Withdrawal","Trade","Fee"],
+    "dateFrom": 1657550477,
+    "limit": 5,
+    "offset": 0
+  }
+}
+```
+{% endtab %}
+
+{% tab title="Response" %}
+```json
+{
+  "q": "v1/broker.wallet/transactions",
+  "sid": 1,
+  "d": {
+    "transactions": [
+      {
+        "id": "7e96a8aa-1f6e-4883-a809-902d6692a068",
+        "type": "Deposit",
+        "account": "Dudi1",
+        "asset": "USD",
+        "amount": "100000",
+        "ledgerReference": "S7KCN6OEQQQF4PUA74WTTOJBQWMFJISB6KZBDJGTCIW6TW2SYVAQ",
+        "timestamp": 1657560546,
+        "requestId": "6e74bbc0-5b03-4549-aa1e-fd27ec5e8a62"
+      },
+      {
+        "id": "4cb8ed2c-ad0a-4e31-82b4-6f15ef0a28b5",
+        "type": "Trade",
+        "account": "Dudi1",
+        "asset": "Gold",
+        "amount": "-10",
+        "ledgerReference": "P6OBXNG5WOBJTCAZVHH3UT6Q73UMLCISK5MJ3X27LX6S3SGGLOBQ",
+        "internalReference": "Gold-USD|trade|671",
+        "timestamp": 1657560444,
+        "requestId": "00000000-029f-6000-0000-001e00000001"
+      },
+      {
+        "id": "f1d6ddd0-d7f0-473c-b98a-32f002fc67e1",
+        "type": "Trade",
+        "account": "Dudi1",
+        "asset": "Gold",
+        "amount": "10",
+        "ledgerReference": "P6OBXNG5WOBJTCAZVHH3UT6Q73UMLCISK5MJ3X27LX6S3SGGLOBQ",
+        "internalReference": "Gold-USD|trade|671",
+        "timestamp": 1657560444,
+        "requestId": "00000000-029f-6000-0000-001e00000001"
+      },
+      {
+        "id": "90f58d83-a5f2-498e-8c93-aaa34a46a822",
+        "type": "Fee",
+        "account": "Dudi1",
+        "asset": "USD",
+        "amount": "-20",
+        "ledgerReference": "GDNEIFC5F6GB5BC2TRZGJNGVZV5QRVVAQIFB5BMVQIS42MTLBMBQ",
+        "internalReference": "Gold-USD|trade|671",
+        "timestamp": 1657560444,
+        "requestId": "00000000-029f-6000-0000-001e00000001"
+      },
+      {
+        "id": "a472b067-00c0-4cd2-a71a-cef3fe99300c",
+        "type": "Trade",
+        "account": "Dudi1",
+        "asset": "USD",
+        "amount": "-10000",
+        "ledgerReference": "2SSLEF3WWQ27LUPTGDL27MSLT6GXTWEHV4L2PSWNIIIN3O2OFZCA",
+        "internalReference": "Gold-USD|trade|671",
+        "timestamp": 1657560444,
+        "requestId": "00000000-029f-6000-0000-001e00000001"
+      }
+    ],
+    "count": 33
+  }
+}
+```
+{% endtab %}
+{% endtabs %}
+
+###
+
+##
+
 ##

@@ -66,11 +66,11 @@ Get instruments list with their details
 
 | Field                  | Type   | Description                                |
 | ---------------------- | ------ | ------------------------------------------ |
-| id                     | UUID   | Instrument Id                              |
+| id                     | int    | Instrument Id                              |
 | symbol                 | String | Instrument symbol                          |
 | status                 | eNum   | “Active”/ “Disabled”                       |
-| baseAsset              | String | Base asset                                 |
-| quoteAsset             | String | Quote asset                                |
+| baseAsset              | String | Base asset name                            |
+| quoteAsset             | String | Quote asset name                           |
 | orderFlow              | eNum   | Not relevant, ignore                       |
 | tradeFlow              | eNum   | Not relevant, ignore                       |
 | description `optional` | String | Instrument description                     |
