@@ -11,7 +11,7 @@ Market data API is using the same websocket endpoint as the Reporting API.
 This API allows easy refresh of the book state without the need to calculate the entire book, it allows consumers to subscribe to some price levels in the book.
 
 {% hint style="info" %}
-`endpoint:` v1/exchange.marketdata/partialOrderBook
+`qualifier:` v1/exchange.marketdata/partialOrderBook
 {% endhint %}
 
 ### **Request**
@@ -137,7 +137,7 @@ This API allows easy refresh of the book state without the need to calculate the
 This API allows easy refresh of the instruments market data.
 
 {% hint style="info" %}
-`endpoint:` v1/exchange.marketdata/lightTickers
+`qualifier:` v1/exchange.marketdata/lightTickers
 {% endhint %}
 
 ### **Request**
@@ -226,7 +226,7 @@ Trade will come sorted by time, old trades will come first. \
 When snapshot is completed, the last trade will be sent again, but quantity field will be set to 0.&#x20;
 
 {% hint style="info" %}
-`endpoint:` v1/exchange.marketdata/liveTrades
+`qualifier:` v1/exchange.marketdata/liveTrades
 {% endhint %}
 
 ### **Request**

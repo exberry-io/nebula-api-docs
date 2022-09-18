@@ -34,7 +34,7 @@ Time in force:
 | Market |  ❌  |  ❌  |  ✔️ |  ✔️ |
 
 {% hint style="info" %}
-`endpoint:` v1/broker.oms/placeOrder
+`qualifier:` v1/broker.oms/placeOrder
 {% endhint %}
 
 ### **Request Parameters**&#x20;
@@ -44,8 +44,8 @@ Time in force:
 | orderType                                     | Enum     | Order type Limit or Market                                                                                                                                                                                                               |
 | side                                          | Enum     | Order side Buy or Sell                                                                                                                                                                                                                   |
 | instrument                                    | String   | Instrument identifier                                                                                                                                                                                                                    |
-| quantity                                      | Decimal  | Order quantity                                                                                                                                                                                                                           |
-| price `optional`                              | Decimal  | The price of the Limit order. For Market order this will not be sent.                                                                                                                                                                    |
+| quantity                                      | Decimal  | <p>Order quantity.<br>Allowed precision: baseAsset.quantityPrecision  </p>                                                                                                                                                               |
+| price `optional`                              | Decimal  | <p>The price of the Limit order. For Market order this will not be sent.<br>Allowed precision: quoteAsset.quantityPrecision </p>                                                                                                         |
 | timeInForce                                   | Enum     | <p>GTC, GTD, FOK, IOC for Limit order</p><p>FOK, IOC - for Market order</p>                                                                                                                                                              |
 | <p>expiryDate</p><p><code>optional</code></p> | UTC Time | <p>Required only for GTD orders - expiration date and time in seconds, in GMT. <br>In case that trading is halted or market is closed at expiry date - the order will be cancelled (even that cancelOrder requests are not allowed).</p> |
 
@@ -120,7 +120,7 @@ If you send a valid cancel order request, you will receive ack response, this do
 Non-valid request will be responded with error message.&#x20;
 
 {% hint style="info" %}
-`endpoint:` v1/broker.oms/cancelOrder
+`qualifier:` v1/broker.oms/cancelOrder
 {% endhint %}
 
 ### **Request Parameters**&#x20;
@@ -195,6 +195,10 @@ Empty response&#x20;
 * Real time orders events&#x20;
 
 When subscribing to this stream you will get list of all your active orders, when snapshot is done you will get "SanpshotEnd" message, from that moment you will get real time events for any trading activity in your account, this stream is the only way to track your trading command (place/ cancel order) and understand your orders state .
+
+{% hint style="info" %}
+`qualifier:` v1/broker.account/orders
+{% endhint %}
 
 ### **Request Parameters**&#x20;
 
@@ -404,17 +408,16 @@ When subscribing to this stream you will get list of all your balances, when sna
 \
 No request parameter for this API.
 
+{% hint style="info" %}
+`qualifier:` v1/broker.account/balance
+{% endhint %}
+
 ### **Error Codes**
 
 | Code | Message                                                                                 |
 | ---- | --------------------------------------------------------------------------------------- |
 | 1    | `System is unavailable`                                                                 |
 | 100  | `Missing or invalid parameter: [FieldName]`                                             |
-| 200  | <p><code>Invalid session</code><br><code>You don’t have the right permission</code></p> |
-
-| Code | Message                                                                                 |
-| ---- | --------------------------------------------------------------------------------------- |
-| 1    | `System is unavailable`                                                                 |
 | 200  | <p><code>Invalid session</code><br><code>You don’t have the right permission</code></p> |
 
 ### **Samples**

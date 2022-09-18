@@ -20,7 +20,7 @@ Similarly to the Trading API, same authentication approach is applicable to the 
 Any account can use the `orders` API  to retrieve the full list of all its own orders . &#x20;
 
 {% hint style="info" %}
-`endpoint:` v1/broker.account/ordersHistory
+`qualifier:` v1/broker.account/ordersHistory
 {% endhint %}
 
 ### Request
@@ -140,7 +140,7 @@ Any account can use the `orders` API  to retrieve the full list of all its own o
 `trades` API  allows to retrieve the full list of all its own trades.  &#x20;
 
 {% hint style="info" %}
-`endpoint: v`1/broker.account/tradesHistory
+`qualifier: v`1/broker.account/tradesHistory
 {% endhint %}
 
 ### Request
@@ -244,7 +244,7 @@ Any account can use the `orders` API  to retrieve the full list of all its own o
 `transactions` API  allows to retrieve the full list of account transactions.  &#x20;
 
 {% hint style="info" %}
-`endpoint:` v1/broker.wallet/transactions
+`qualifier:` v1/broker.wallet/transactions
 {% endhint %}
 
 ### Request
@@ -374,9 +374,3 @@ Any account can use the `orders` API  to retrieve the full list of all its own o
 ```
 {% endtab %}
 {% endtabs %}
-
-###
-
-##
-
-##

@@ -57,7 +57,7 @@ The `createSession` API lets you authenticate to Nebula API.
 Prior to any exchange API call you must create a valid session, this session remains active as long as WebSocket connection remains open.&#x20;
 
 {% hint style="info" %}
-`endpoint:` v1/broker.oms/createSession
+`qualifier:` v1/broker.oms/createSession
 {% endhint %}
 
 ### **Request**
