@@ -4,7 +4,7 @@
 
 * TBD
 
-## 2022- 07-12
+## 2022- 07-12 ✔️
 
 Added new APIs:&#x20;
 
@@ -13,6 +13,6 @@ Added new APIs:&#x20;
 
 &#x20;On [#get-instruments](../trading-app-apis/meta-data-api.md#get-instruments "mention") id was changed to be integer&#x20;
 
-## April 2022
+## April 2022 ✔️
 
 Draft version release&#x20;
