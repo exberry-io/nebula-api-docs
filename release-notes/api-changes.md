@@ -4,6 +4,10 @@
 
 * TBD
 
+## 2023- 06-06✔️
+
+* New Time In Force was added for limit order - **DAY** - Order will be automatically canceled when trading day is closed.
+
 ## 2022- 07-12 ✔️
 
 Added new APIs:&#x20;

@@ -26,12 +26,10 @@ Time in force:
 * **GTC** - Good Till Cancel (resting on book till cancellation)
 * **GTD** - Good Till Date (at given time (expiryDate) order will be automatically cancelled).
 * **FOK** - Fill Or Kill (all or nothing)
-* **IOC** - Immediate Or Cancelled (allows partial fills)&#x20;
+* **IOC** - Immediate Or Cancelled (allows partial fills)
+* <mark style="color:blue;">NEW</mark> **DAY** - Order will be automatically cancelled when trading day is closed. &#x20;
 
-| Type   | GTC | GTD | FOK | IOC |
-| ------ | :-: | :-: | :-: | :-: |
-| Limit  |  ✔️ |  ✔️ |  ✔️ |  ✔️ |
-| Market |  ❌  |  ❌  |  ✔️ |  ✔️ |
+<table><thead><tr><th width="117">Type</th><th width="97" align="center">GTC</th><th width="90" align="center">GTD</th><th width="85" align="center">FOK</th><th width="90" align="center">IOC</th><th>NEW DAY</th></tr></thead><tbody><tr><td>Limit</td><td align="center">✔️</td><td align="center">✔️</td><td align="center">✔️</td><td align="center">✔️</td><td>✔️</td></tr><tr><td>Market</td><td align="center">❌</td><td align="center">❌</td><td align="center">✔️</td><td align="center">✔️</td><td>❌</td></tr></tbody></table>
 
 {% hint style="info" %}
 `qualifier:` v1/broker.oms/placeOrder
@@ -39,15 +37,7 @@ Time in force:
 
 ### **Request Parameters**&#x20;
 
-| Parameter                                     | Type     | Description                                                                                                                                                                                                                              |
-| --------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| orderType                                     | Enum     | Order type Limit or Market                                                                                                                                                                                                               |
-| side                                          | Enum     | Order side Buy or Sell                                                                                                                                                                                                                   |
-| instrument                                    | String   | Instrument identifier                                                                                                                                                                                                                    |
-| quantity                                      | Decimal  | <p>Order quantity.<br>Allowed precision: baseAsset.quantityPrecision  </p>                                                                                                                                                               |
-| price `optional`                              | Decimal  | <p>The price of the Limit order. For Market order this will not be sent.<br>Allowed precision: quoteAsset.quantityPrecision </p>                                                                                                         |
-| timeInForce                                   | Enum     | <p>GTC, GTD, FOK, IOC for Limit order</p><p>FOK, IOC - for Market order</p>                                                                                                                                                              |
-| <p>expiryDate</p><p><code>optional</code></p> | UTC Time | <p>Required only for GTD orders - expiration date and time in seconds, in GMT. <br>In case that trading is halted or market is closed at expiry date - the order will be cancelled (even that cancelOrder requests are not allowed).</p> |
+<table><thead><tr><th width="144.20631067961165">Parameter</th><th width="105">Type</th><th width="492.2">Description</th></tr></thead><tbody><tr><td>orderType</td><td>Enum</td><td>Order type Limit or Market</td></tr><tr><td>side</td><td>Enum</td><td>Order side Buy or Sell</td></tr><tr><td>instrument</td><td>String</td><td>Instrument identifier</td></tr><tr><td>quantity</td><td>Decimal</td><td>Order quantity.<br>Allowed precision: baseAsset.quantityPrecision  </td></tr><tr><td>price <code>optional</code></td><td>Decimal</td><td>The price of the Limit order. For Market order this will not be sent.<br>Allowed precision: quoteAsset.quantityPrecision </td></tr><tr><td>timeInForce</td><td>Enum</td><td><p>GTC, GTD, FOK, IOC, <mark style="color:blue;">NEW</mark> DAY for Limit order</p><p>FOK, IOC - for Market order</p></td></tr><tr><td><p>expiryDate</p><p><code>optional</code></p></td><td>UTC Time</td><td>Required only for GTD orders - expiration date and time in seconds, in GMT. <br>In case that trading is halted or market is closed at expiry date - the order will be cancelled (even that cancelOrder requests are not allowed).</td></tr></tbody></table>
 
 ### **Ack Response**
 
@@ -55,15 +45,7 @@ Empty response&#x20;
 
 ### **Error Codes**
 
-| Code | Message                                                                                                                                                            |
-| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1    | `System is unavailable`                                                                                                                                            |
-| 100  | `Missing or invalid parameter: [FieldName]`                                                                                                                        |
-| 101  | <p><code>Instrument no found</code> </p><p><code>Account is not verified</code> </p><p><code>Instrument is not active</code><br><code>Missing fee setup</code></p> |
-| 104  | `[ledgerSystem] account does not opt in to [AssetName]`                                                                                                            |
-| 105  | `Insufficient balance, [ order locked balance - account free balance] in [AssetName] are missing`                                                                  |
-| 200  | <p><code>Invalid session</code> </p><p><code>You don’t have the right permission</code></p>                                                                        |
-| 99   | `[ErrorMassage]`                                                                                                                                                   |
+<table><thead><tr><th width="110.89757058437291">Code</th><th width="568.7142857142858">Message</th></tr></thead><tbody><tr><td>1</td><td><code>System is unavailable</code></td></tr><tr><td>100</td><td><code>Missing or invalid parameter: [FieldName]</code></td></tr><tr><td>101</td><td><p><code>Instrument no found</code> </p><p><code>Account is not verified</code> </p><p><code>Instrument is not active</code><br><code>Missing fee setup</code></p></td></tr><tr><td>104</td><td><code>[ledgerSystem] account does not opt in to [AssetName]</code></td></tr><tr><td>105</td><td><code>Insufficient balance, [ order locked balance - account free balance] in [AssetName] are missing</code></td></tr><tr><td>200</td><td><p><code>Invalid session</code> </p><p><code>You don’t have the right permission</code></p></td></tr><tr><td>99</td><td><code>[ErrorMassage]</code></td></tr></tbody></table>
 
 ### **Samples**
 
@@ -125,10 +107,7 @@ Non-valid request will be responded with error message.&#x20;
 
 ### **Request Parameters**&#x20;
 
-| Parameter  | Type   | Description           |
-| ---------- | ------ | --------------------- |
-| orderId    | Long   | Nebula Order Id       |
-| instrument | String | Instrument identifier |
+<table><thead><tr><th width="146.7242848447961">Parameter</th><th width="90">Type</th><th width="357.2">Description</th></tr></thead><tbody><tr><td>orderId</td><td>Long</td><td>Nebula Order Id</td></tr><tr><td>instrument</td><td>String</td><td>Instrument identifier</td></tr></tbody></table>
 
 ### **Ack Response**
 
@@ -136,13 +115,7 @@ Empty response&#x20;
 
 ### **Error Codes**
 
-| Code | Message                                                                                                                     |
-| ---- | --------------------------------------------------------------------------------------------------------------------------- |
-| 1    | `System is unavailable`                                                                                                     |
-| 100  | `Missing or invalid parameter: [FieldName]`                                                                                 |
-| 101  | <p><code>Instrument not found</code> </p><p><code>Instrument is not active</code> </p><p><code>orderId not found</code></p> |
-| 200  | <p><code>Invalid session</code><br><code>You don’t have the right permission</code></p>                                     |
-| 99   | `[ErrorMessage]`                                                                                                            |
+<table><thead><tr><th width="100.57212713936428">Code</th><th width="492.7142857142857">Message</th></tr></thead><tbody><tr><td>1</td><td><code>System is unavailable</code></td></tr><tr><td>100</td><td><code>Missing or invalid parameter: [FieldName]</code></td></tr><tr><td>101</td><td><p><code>Instrument not found</code> </p><p><code>Instrument is not active</code> </p><p><code>orderId not found</code></p></td></tr><tr><td>200</td><td><code>Invalid session</code><br><code>You don’t have the right permission</code></td></tr><tr><td>99</td><td><code>[ErrorMessage]</code></td></tr></tbody></table>
 
 ### **Samples**
 
@@ -202,17 +175,11 @@ When subscribing to this stream you will get list of all your active orders, whe
 
 ### **Request Parameters**&#x20;
 
-| Parameter             | Type   | Description            |
-| --------------------- | ------ | ---------------------- |
-| instrument `optional` | String | Instrument identifier  |
+<table><thead><tr><th width="150">Parameter</th><th width="103.7242848447961">Type</th><th width="357.2">Description</th></tr></thead><tbody><tr><td>instrument <code>optional</code></td><td>String</td><td>Instrument identifier </td></tr></tbody></table>
 
 ### **Error Codes**
 
-| Code | Message                                                                                 |
-| ---- | --------------------------------------------------------------------------------------- |
-| 1    | `System is unavailable`                                                                 |
-| 100  | `Missing or invalid parameter: [FieldName]`                                             |
-| 200  | <p><code>Invalid session</code><br><code>You don’t have the right permission</code></p> |
+<table><thead><tr><th width="104.57212713936428">Code</th><th width="546.7142857142858">Message</th></tr></thead><tbody><tr><td>1</td><td><code>System is unavailable</code></td></tr><tr><td>100</td><td><code>Missing or invalid parameter: [FieldName]</code></td></tr><tr><td>200</td><td><code>Invalid session</code><br><code>You don’t have the right permission</code></td></tr></tbody></table>
 
 ### **Samples**
 
@@ -414,11 +381,7 @@ No request parameter for this API.
 
 ### **Error Codes**
 
-| Code | Message                                                                                 |
-| ---- | --------------------------------------------------------------------------------------- |
-| 1    | `System is unavailable`                                                                 |
-| 100  | `Missing or invalid parameter: [FieldName]`                                             |
-| 200  | <p><code>Invalid session</code><br><code>You don’t have the right permission</code></p> |
+<table><thead><tr><th width="119.57212713936428">Code</th><th width="492.7142857142857">Message</th></tr></thead><tbody><tr><td>1</td><td><code>System is unavailable</code></td></tr><tr><td>100</td><td><code>Missing or invalid parameter: [FieldName]</code></td></tr><tr><td>200</td><td><code>Invalid session</code><br><code>You don’t have the right permission</code></td></tr></tbody></table>
 
 ### **Samples**
 
