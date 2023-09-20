@@ -2,7 +2,7 @@
 
 ## Coming Soon...  :hammer\_pick:
 
-* TBD
+* TBD..
 
 ## 2023- 06-06✔️
 
