@@ -15,8 +15,4 @@ Using the `access_token` client application can now access all the relevant Exbe
 
 ### Endpoints
 
-| GW                    | Endpoint                                                            |
-| --------------------- | ------------------------------------------------------------------- |
-| Trading               | `wss://nebula-sandbox-shared.staging.exberry-uat.io`                |
-| History & Market Data | `wss://api-gateway-staging.site.staging.exberry-uat.io`             |
-| Metadata              | `https://admin-api-shared.staging.exberry-uat.io/trader-api/broker` |
+<table><thead><tr><th width="155.28935266629296">GW</th><th width="377.41943224298006">Endpoint</th></tr></thead><tbody><tr><td>Trading</td><td><code>wss://nebula.uat.exberry-uat.io/</code></td></tr><tr><td>History &#x26; Market Data</td><td><code>wss://api-gateway.uat.exberry-uat.io</code></td></tr><tr><td>Metadata</td><td><code>https://admin-api.uat.exberry-uat.io/trader-api/broker</code></td></tr></tbody></table>
